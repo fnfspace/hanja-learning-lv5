@@ -289,3 +289,141 @@ h2 {
   color: #7F8C8D;
   margin-top: 300px;
 }
+
+/* 📱 모바일 가로모드 (폭 1080px 이하 + landscape) */
+@media screen and (max-width: 1080px) and (orientation: landscape) {
+  .home-page {
+    height: auto;
+    padding-top: 0vh;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 0px;
+  }
+
+  .page { margin-top: 15px !important; }
+
+  h1 { font-size: 1.4rem; }
+  h2 { font-size: 0.9rem; margin: 5px 0 0 0; }
+
+  #home-icon {
+    font-size: 3rem !important;
+    top: 10px; left: 10px;
+  }
+
+  .arrow.left {
+    border-width: 20px 30px 20px 0;
+    margin-left: 10px;
+  }
+  .arrow.right {
+    border-width: 20px 0 20px 30px;
+    margin-right: 10px;
+  }
+
+  .menu {
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    margin-top: 15px;
+  }
+  .menu button {
+    width: 140%;
+    height: 45px;
+    font-size: 14px;
+  }
+
+  .shuffle-icon {
+    font-size: 1rem;
+    margin-top: 3px;
+  }
+
+  .progress-indicator {
+    font-size: 1rem;
+    padding: 7px 15px;
+    border-radius: 8px;
+  }
+
+  /* 플래시카드 */
+  .card {
+    width: 70px; height: 100px;
+    font-size: 16px;
+  }
+
+  /* 한자 메인 컨테이너 - 가로 배치 */
+  .hanja-container {
+    margin-top: -20px;     /* 위로 살짝 이동 */
+    display: flex;
+    flex-direction: row;       /* 세로(column) → 가로(row) */
+    justify-content: center;   /* 가운데 정렬 */
+    align-items: center;       /* 세로축 가운데 맞춤 */
+    gap: 20px;                 /* 한자와 음훈 사이 간격 */
+  }
+
+  /* 한자 애니메이션 영역 */
+  #hanzi-character {
+    width: 200px;
+    height: 200px;
+  }
+
+  /* 음훈 표시 */
+  .hanja-reading {
+    font-size: 2.5rem;
+    text-align: left;          /* 왼쪽 정렬로 자연스럽게 */
+  }
+
+  /* 2단계 */
+  .stage2-container {
+    min-height: 60vh;
+    margin-top: -10px;
+    gap: 0px;
+    align-items: center;
+  }
+  .stage2-hanja {
+    font-size: 8rem !important;
+    margin-bottom: 5px;
+  }
+  .stage2-option {
+    font-size: 1rem;
+    padding: 5px 10px;
+    margin: 5px;
+  }
+
+  /* 3단계 */
+  .stage3-container {
+    min-height: 60vh;        /* 원래 70vh → 줄여서 위로 올림 */
+    margin-top: 5px;       /* 음수 margin으로 살짝 위로 이동 */
+    justify-content: flex-start; /* 위쪽 정렬 */
+    align-items: center;
+  }
+
+  .stage3-reading {
+    font-size: 4rem !important;
+    margin-bottom: 15px;
+  }
+  .stage3-options {
+    gap: 15px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .stage3-option {
+    width: 120px; height: 120px;
+    font-size: 4rem;
+  }
+
+  /* 4단계 */
+  .stage4-container {
+    grid-template-columns: repeat(5, 100px);
+    column-gap: 10px; row-gap: 10px;
+    min-height: 55vh;
+  }
+  .stage4-card {
+    width: 100px; height: 100px;
+  }
+  .hanja-card { font-size: 3rem; }
+  .reading-card { font-size: 1rem; }
+
+  .hanja-level {
+    font-size: 0.8rem;
+    margin-top: 100px;
+  }
+}

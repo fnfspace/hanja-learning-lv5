@@ -188,7 +188,7 @@ function showCurrentStage() {
   }
 }
 
-// 1단계: 한자 애니메이션
+// 1단계: 한자 애니메이션 (모바일 대응)
 function showStage1(charObj) {
   const stageContent = document.getElementById("stage-content");
   stageContent.innerHTML = "";
@@ -199,6 +199,7 @@ function showStage1(charObj) {
   hideArrows();
   document.querySelector(".stage4-controls").classList.add("hidden");
 
+  // 컨테이너 생성
   const container = document.createElement("div");
   container.className = "hanja-container";
 
@@ -223,10 +224,14 @@ function showStage1(charObj) {
 
   stageContent.appendChild(container);
 
+  // 화면 크기 체크 → 모바일이면 작게
+  const isMobileLandscape = window.matchMedia("(max-width: 1080px) and (orientation: landscape)").matches;
+  const size = isMobileLandscape ? 200 : 500;
+
   // HanziWriter 애니메이션
   const writer = HanziWriter.create('hanzi-character', charObj.char, {
-    width: 500,
-    height: 500,
+    width: size,
+    height: size,
     strokeColor: '#2C3E50',
     showOutline: true
   });
@@ -237,6 +242,7 @@ function showStage1(charObj) {
     showArrows();
   });
 }
+
 
 // 2단계: 한자 → 음훈 퀴즈
 function showStage2(charObj, allData) {
