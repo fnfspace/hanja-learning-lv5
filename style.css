@@ -1,0 +1,291 @@
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  text-align: center;
+  font-family: 'Noto Serif KR', serif; /* 모든 단계 동일 글꼴 */
+  background-color: #ffffff;
+}
+
+.home-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  height: 100vh;
+  padding-top: 10vh;
+}
+
+.page { margin-top: 50px; }
+.hidden { display: none !important; }
+
+h1 {
+  font-size: 3rem;
+  color: #2C3E50;
+  margin: 0;
+}
+
+h2 {
+  font-size: 1.5rem;
+  color: #7F8C8D;
+  margin: 20px 0 0 0;
+}
+
+.menu {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  margin-top: 40px;
+}
+
+.menu button {
+  width: 400px;
+  height: 80px;
+  font-size: 24px;
+  font-weight: bold;
+  cursor: pointer;
+  border: 2px solid #4A90E2;
+  border-radius: 10px;
+  background-color: #f0f8ff;
+  transition: background-color 0.2s, transform 0.2s;
+}
+.menu button:hover {
+  background-color: #4A90E2;
+  color: white;
+  transform: scale(1.05);
+}
+
+.title-row { display: flex; align-items: flex-start; gap: 10px; }
+.shuffle-icon {
+  font-size: 2rem;
+  cursor: pointer;
+  user-select: none;
+  transition: transform 0.2s ease;
+  margin-top: 13px;
+}
+.shuffle-icon:hover { transform: scale(1.2); }
+.shuffle-icon.shake { animation: shake 0.5s; }
+
+@keyframes shake {
+  0% { transform: translateX(0); }
+  20% { transform: translateX(-5px); }
+  40% { transform: translateX(5px); }
+  60% { transform: translateX(-5px); }
+  80% { transform: translateX(5px); }
+  100% { transform: translateX(0); }
+}
+
+/* 홈 아이콘 */
+#home-icon {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  font-size: 5rem;
+  cursor: pointer;
+  color: #4A90E2;
+  transition: transform 0.2s, color 0.2s;
+}
+#home-icon:hover,
+#home-icon.hovered {
+  transform: scale(1.2);
+  color: #ff6600;
+}
+
+/* 네비게이션 화살표 */
+.nav-arrows {
+  position: fixed;
+  top: 50%;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  pointer-events: none;
+  transform: translateY(-50%);
+}
+.arrow {
+  width: 0; height: 0;
+  border-style: solid;
+  cursor: pointer;
+  pointer-events: auto;
+  transition: transform 0.2s;
+}
+.arrow.left {
+  border-width: 50px 60px 50px 0;
+  border-color: transparent #4A90E2 transparent transparent;
+  margin-left: 20px;
+}
+.arrow.left:hover {
+  border-color: transparent #357ABD transparent transparent;
+  transform: scale(1.2);
+}
+.arrow.right {
+  border-width: 50px 0 50px 60px;
+  border-color: transparent transparent transparent #4A90E2;
+  margin-right: 20px;
+}
+.arrow.right:hover {
+  border-color: transparent transparent transparent #357ABD;
+  transform: scale(1.2);
+}
+
+/* 공통 한자 폰트 */
+.hanja-font {
+  font-family: 'Noto Serif KR', serif; /* 원하는 한자체 */
+  font-size: 3rem;   /* 크기 조정 */
+  font-weight: bold;
+  color: #2C3E50;
+}
+
+/* 암기카드 */
+#flashcards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 15px;
+}
+.card {
+  width: 100px; height: 150px;
+  border: 2px solid #333;
+  border-radius: 8px;
+  background: #f9f9f9;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 24px;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+.card:hover { transform: scale(1.05); }
+
+.progress-indicator {
+  position: fixed;
+  top: 10px; right: 10px;
+  font-size: 1.2rem;
+  color: #333;
+  background: rgba(255,255,255,0.8);
+  padding: 4px 8px;
+  border-radius: 6px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+/* 한자와 음훈 나란히 */
+.hanja-container {
+  position: fixed;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex; justify-content: center; align-items: center;
+  gap: 20px;
+}
+
+#hanzi-character {
+  width: 500px;
+  height: 500px;
+}
+
+.hanja-reading {
+  font-size: 6rem;
+  color: #2C3E50;
+  font-weight: bold;
+}
+
+/* 2단계 */
+.stage2-container {
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  min-height: 60vh;
+}
+.stage2-hanja {
+  font-size: 20rem;
+  color: #2C3E50;
+  font-weight: bold;
+  margin-bottom: 30px;
+}
+.stage2-option {
+  font-size: 2rem;
+  padding: 10px 20px;
+  margin: 10px;
+  border: 2px solid #4A90E2;
+  border-radius: 8px;
+  cursor: pointer;
+  background-color: #f9f9f9;
+  transition: background-color 0.2s, transform 0.2s;
+}
+.stage2-option:hover {
+  background-color: #4A90E2;
+  color: white;
+  transform: scale(1.05);
+}
+
+/* 3단계 */
+.stage3-container {
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  min-height: 70vh;
+}
+.stage3-reading {
+  font-size: 120px;
+  margin-bottom: 30px;
+  text-align: center;
+}
+.stage3-options {
+  display: flex; align-items: center; gap: 50px;
+}
+.stage3-option {
+  font-size: 200px;
+  width: 300px; height: 300px;
+  display: flex; align-items: center; justify-content: center;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.stage3-option:hover { background-color: #e0e0e0; }
+
+/* 4단계 */
+.stage4-container {
+  display: grid;
+  grid-template-columns: repeat(5, 300px);
+  column-gap: 20px; row-gap: 20px;
+  justify-content: center; align-items: center;
+  place-content: center;
+  min-height: 70vh;
+}
+.stage4-card {
+  width: 300px; height: 300px;
+  display: flex; align-items: center; justify-content: center;
+  border: 2px solid #ccc;
+  border-radius: 10px;
+  background-color: #f9f9f9;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.stage4-card:hover { background-color: #e0e0e0; }
+.hanja-card { font-size: 120px; }
+.reading-card { font-size: 50px; color: #333; }
+
+.subtitle-row { display: flex; justify-content: center; align-items: center; gap: 5px; }
+.stage4-controls { display: flex; justify-content: center; gap: 5px; margin-top: 15px; }
+.icon-btn {
+  font-size: 27px;
+  border: none; background: transparent;
+  cursor: pointer;
+  transition: transform 0.2s;
+  margin: 0 !important; padding: 0;
+}
+.icon-btn:hover { transform: scale(1.2); }
+
+/* 정답/오답 표시 */
+.correct-circle {
+  border: 3px solid green;
+  border-radius: 50%;
+}
+.wrong-square {
+  border: 3px solid red;
+  border-radius: 8px;
+}
+
+.hanja-level {
+  font-size: 1rem;
+  color: #7F8C8D;
+  margin-top: 300px;
+}
