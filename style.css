@@ -257,7 +257,6 @@ h2 {
   border-radius: 10px;
   background-color: #f9f9f9;
   cursor: pointer;
-  transition: all 0.2s ease;
 }
 .stage4-card:hover { background-color: #e0e0e0; }
 .hanja-card { font-size: 120px; }
@@ -351,7 +350,7 @@ h2 {
 
   /* 한자 메인 컨테이너 - 가로 배치 */
   .hanja-container {
-    margin-top: -20px;     /* 위로 살짝 이동 */
+    margin-top: 0px;     /* 위로 살짝 이동 */
     display: flex;
     flex-direction: row;       /* 세로(column) → 가로(row) */
     justify-content: center;   /* 가운데 정렬 */
@@ -391,13 +390,13 @@ h2 {
   /* 3단계 */
   .stage3-container {
     min-height: 60vh;        /* 원래 70vh → 줄여서 위로 올림 */
-    margin-top: 5px;       /* 음수 margin으로 살짝 위로 이동 */
+    margin-top: 15px;       /* 음수 margin으로 살짝 위로 이동 */
     justify-content: flex-start; /* 위쪽 정렬 */
     align-items: center;
   }
 
   .stage3-reading {
-    font-size: 4rem !important;
+    font-size: 3rem !important;
     margin-bottom: 15px;
   }
   .stage3-options {
@@ -411,7 +410,11 @@ h2 {
   }
 
   /* 4단계 */
+  .stage4-controls .icon-btn {
+    margin-top: -10px !important;   /* 위로 살짝 올림 */
+  }
   .stage4-container {
+    margin-top: 10px !important;
     grid-template-columns: repeat(5, 100px);
     column-gap: 10px; row-gap: 10px;
     min-height: 55vh;

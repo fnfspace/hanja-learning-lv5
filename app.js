@@ -211,7 +211,7 @@ function showStage1(charObj) {
   // 음훈 표시
   const readingDiv = document.createElement("div");
   readingDiv.className = "hanja-reading";
-  readingDiv.innerHTML = charObj.readings.map(r => r.trim()).join("<br>");
+  readingDiv.innerHTML = charObj.readings.map(r => r.trim()).join(" ");
   readingDiv.style.visibility = "hidden";
   container.appendChild(readingDiv);
 
