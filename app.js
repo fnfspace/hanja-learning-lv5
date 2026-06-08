@@ -211,7 +211,23 @@ function showStage1(charObj) {
   // 음훈 표시
   const readingDiv = document.createElement("div");
   readingDiv.className = "hanja-reading";
-  readingDiv.innerHTML = charObj.readings.map(r => r.trim()).join(" ");
+
+  if (charObj.readings.length === 1) {
+    // 음훈이 하나일 경우 → 한 줄
+    const span = document.createElement("span");
+    span.textContent = charObj.readings[0].trim();
+    readingDiv.appendChild(span);
+    readingDiv.style.whiteSpace = "nowrap";
+  } else {
+    // 음훈이 여러 개일 경우 → 각 음훈을 블록 요소로 표시
+    charObj.readings.forEach(r => {
+      const line = document.createElement("div");
+      line.textContent = r.trim();
+      readingDiv.appendChild(line);
+    });
+    readingDiv.style.whiteSpace = "normal";
+  }
+
   readingDiv.style.visibility = "hidden";
   container.appendChild(readingDiv);
 
@@ -260,7 +276,7 @@ function showStage2(charObj, allData) {
 
   // 문제: 한자 표시
   const hanjaDiv = document.createElement("div");
-hanjaDiv.className = "stage2-hanja hanja-font";
+  hanjaDiv.className = "stage2-hanja hanja-font";
   hanjaDiv.textContent = charObj.char;
   container.appendChild(hanjaDiv);
 

@@ -350,7 +350,7 @@ h2 {
 
   /* 한자 메인 컨테이너 - 가로 배치 */
   .hanja-container {
-    margin-top: 0px;     /* 위로 살짝 이동 */
+    margin-top: 10px;     /* 위로 살짝 이동 */
     display: flex;
     flex-direction: row;       /* 세로(column) → 가로(row) */
     justify-content: center;   /* 가운데 정렬 */
@@ -367,7 +367,11 @@ h2 {
   /* 음훈 표시 */
   .hanja-reading {
     font-size: 2.5rem;
-    text-align: left;          /* 왼쪽 정렬로 자연스럽게 */
+    text-align: left;
+    display: inline-block; /* 내용 길이에 맞춰 폭 자동 조정 */
+  }
+  .hanja-reading div {
+    white-space: nowrap; /* 각 줄은 자동 줄바꿈 없이 한 줄 유지 */
   }
 
   /* 2단계 */
@@ -428,5 +432,7 @@ h2 {
   .hanja-level {
     font-size: 0.8rem;
     margin-top: 100px;
+    text-align: left;   /* 음훈과 정렬 맞추기 */
+    white-space: nowrap; /* 줄바꿈 방지 → 항상 한 줄 유지 */
   }
 }
