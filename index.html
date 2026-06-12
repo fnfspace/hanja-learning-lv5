@@ -2,13 +2,22 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
+  <!-- ✅ 모바일 화면 비율 맞추기 -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>한자 학습 프로그램</title>
   <link rel="stylesheet" href="style.css">
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-E83D1XBT1G"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+  
+    gtag('config', 'G-E83D1XBT1G');
+  </script>
   <!-- Hanzi Writer 라이브러리 -->
   <script src="https://unpkg.com/hanzi-writer/dist/hanzi-writer.min.js"></script>
-  <!-- 원하는 글씨체 불러오기 -->
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
   <!-- 홈 화면 -->

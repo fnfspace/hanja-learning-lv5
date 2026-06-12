@@ -56,6 +56,12 @@ h2 {
   color: white;
   transform: scale(1.05);
 }
+.menu button.hovered {
+  /* hover 상태와 동일한 스타일을 적용 */
+  background-color: #4A90E2;
+  color: white;
+  transform: scale(1.05);
+}
 
 .title-row { display: flex; align-items: flex-start; gap: 10px; }
 .shuffle-icon {
@@ -128,10 +134,14 @@ h2 {
   border-color: transparent transparent transparent #357ABD;
   transform: scale(1.2);
 }
+.arrow.right.hovered {
+  border-color: transparent transparent transparent #357ABD; /* hover 색상 */
+  transform: scale(1.2); /* 살짝 확대 */
+}
 
 /* 공통 한자 폰트 */
 .hanja-font {
-  font-family: 'Noto Serif KR', serif; /* 원하는 한자체 */
+  font-family: 'Gulim', sans-serif;
   font-size: 3rem;   /* 크기 조정 */
   font-weight: bold;
   color: #2C3E50;
@@ -174,6 +184,19 @@ h2 {
   transform: translate(-50%, -50%);
   display: flex; justify-content: center; align-items: center;
   gap: 20px;
+}
+
+.hanja-fallback {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 500px;   /* PC 기본 크기 */
+  height: 500px;
+  font-size: 400px;
+  line-height: 500px;
+  font-family: 'Gulim', sans-serif;
+  font-weight: bold;
+  color: #2C3E50;
 }
 
 #hanzi-character {
@@ -356,6 +379,13 @@ h2 {
     justify-content: center;   /* 가운데 정렬 */
     align-items: center;       /* 세로축 가운데 맞춤 */
     gap: 20px;                 /* 한자와 음훈 사이 간격 */
+  }
+
+  .hanja-fallback {
+    width: 200px;
+    height: 200px;
+    font-size: 140px;
+    line-height: 200px;
   }
 
   /* 한자 애니메이션 영역 */

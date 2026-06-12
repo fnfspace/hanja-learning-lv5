@@ -1,3 +1,4 @@
+let mode = "auto"; // normal 또는 auto
 let hanjaData = [];
 
 let currentIndex = 0;
@@ -188,6 +189,9 @@ function showCurrentStage() {
   }
 }
 
+// 전역 변수로 flag 선언
+let animationDone = false;
+
 // 1단계: 한자 애니메이션 (모바일 대응)
 function showStage1(charObj) {
   const stageContent = document.getElementById("stage-content");
@@ -199,11 +203,9 @@ function showStage1(charObj) {
   hideArrows();
   document.querySelector(".stage4-controls").classList.add("hidden");
 
-  // 컨테이너 생성
   const container = document.createElement("div");
   container.className = "hanja-container";
 
-  // 한자 애니메이션 영역
   const hanziDiv = document.createElement("div");
   hanziDiv.id = "hanzi-character";
   container.appendChild(hanziDiv);
@@ -211,15 +213,12 @@ function showStage1(charObj) {
   // 음훈 표시
   const readingDiv = document.createElement("div");
   readingDiv.className = "hanja-reading";
-
   if (charObj.readings.length === 1) {
-    // 음훈이 하나일 경우 → 한 줄
     const span = document.createElement("span");
     span.textContent = charObj.readings[0].trim();
     readingDiv.appendChild(span);
     readingDiv.style.whiteSpace = "nowrap";
   } else {
-    // 음훈이 여러 개일 경우 → 각 음훈을 블록 요소로 표시
     charObj.readings.forEach(r => {
       const line = document.createElement("div");
       line.textContent = r.trim();
@@ -227,7 +226,6 @@ function showStage1(charObj) {
     });
     readingDiv.style.whiteSpace = "normal";
   }
-
   readingDiv.style.visibility = "hidden";
   container.appendChild(readingDiv);
 
@@ -240,25 +238,48 @@ function showStage1(charObj) {
 
   stageContent.appendChild(container);
 
-  // 화면 크기 체크 → 모바일이면 작게
   const isMobileLandscape = window.matchMedia("(max-width: 1080px) and (orientation: landscape)").matches;
   const size = isMobileLandscape ? 200 : 500;
 
-  // HanziWriter 애니메이션
-  const writer = HanziWriter.create('hanzi-character', charObj.char, {
-    width: size,
-    height: size,
-    strokeColor: '#2C3E50',
-    showOutline: true
-  });
+  // HanziWriter 애니메이션 시도
+  try {
+    const writer = HanziWriter.create('hanzi-character', charObj.char, {
+      width: size,
+      height: size,
+      strokeColor: '#2C3E50',
+      showOutline: true
+    });
 
-  writer.animateCharacter().then(() => {
-    readingDiv.style.visibility = "visible";
-    levelDiv.style.visibility = "visible";
-    showArrows();
-  });
+    writer.animateCharacter().then(() => {
+      readingDiv.style.visibility = "visible";
+      levelDiv.style.visibility = "visible";
+      showArrows();
+      animationDone = true;
+    }).catch(() => {
+      // 실패 시 텍스트로 표시
+      hanziDiv.textContent = charObj.char;
+      hanziDiv.classList.add("hanja-fallback");
+
+      // 4초 후에 음훈, 급수, 화살표 표시
+      setTimeout(() => {
+        readingDiv.style.visibility = "visible";
+        levelDiv.style.visibility = "visible";
+        showArrows();
+        animationDone = true;
+      }, 4000);
+    });
+  } catch (e) {
+    hanziDiv.textContent = charObj.char;
+    hanziDiv.classList.add("hanja-fallback");
+  
+    setTimeout(() => {
+      readingDiv.style.visibility = "visible";
+      levelDiv.style.visibility = "visible";
+      showArrows();
+      animationDone = true;
+    }, 4000);
+  }
 }
-
 
 // 2단계: 한자 → 음훈 퀴즈
 function showStage2(charObj, allData) {
@@ -449,4 +470,167 @@ function showStage4(allData) {
   renderCards(allData, container, showReading);
 }
 
+// F5 키 이벤트 → auto Mode일 때만 자동 진행
+document.addEventListener("keydown", (e) => {
+  if (mode === "auto" && (e.key === "F5" || e.code === "F5")) {
+    e.preventDefault();
+    console.log("한자 Auto Mode 시작!");
+    startAutoMode();
+  }
+});
 
+// ----------------------
+// Auto Mode 자동 진행
+// ----------------------
+async function startAutoMode() {
+  await runAutoStage(1); // 1단계
+  await runAutoStage(2); // 2단계
+  await runAutoStage(3); // 3단계
+  await runAutoStage(4); // 4단계
+}
+
+// 버튼에 포커스 효과 주고 클릭하는 헬퍼 함수
+async function focusAndClickButton(stageText) {
+  const buttons = document.querySelectorAll(".menu button");
+  const targetButton = Array.from(buttons).find(btn => btn.textContent.includes(stageText));
+
+  if (targetButton) {
+    targetButton.classList.add("hovered"); // 포커스 효과 적용
+    await delay(2000);                     // 잠시 보여줌
+    targetButton.click();                  // 클릭 실행
+    targetButton.classList.remove("hovered"); // 클릭 후 제거
+  }
+}
+
+async function hoverAndClickNextArrow() {
+  const nextArrow = document.getElementById("nextArrow");
+  if (nextArrow) {
+    // hover 효과 적용
+    nextArrow.classList.add("hovered");
+    await delay(800); // 0.8초 정도 보여줌
+
+    // 클릭 실행
+    nextArrow.click();
+
+    // hover 효과 제거
+    nextArrow.classList.remove("hovered");
+  }
+}
+
+async function hoverAndClickHome() {
+  const homeIcon = document.getElementById("home-icon");
+  if (!homeIcon) {
+    console.warn("home-icon 요소를 찾을 수 없습니다.");
+    return;
+  }
+  console.warn("home-icon 요소를 찾았습니다.");
+  homeIcon.classList.add("hovered"); // hover 효과 강제 적용
+  await delay(800);                  // 잠시 보여줌
+  homeIcon.click();                  // 클릭 실행
+  homeIcon.classList.remove("hovered"); // 클릭 후 제거
+}
+
+async function runAutoStage(stageNumber) {
+  await delay(2000);
+
+  switch (stageNumber) {
+    case 1:
+      await focusAndClickButton("1단계");
+
+      for (let i = 0; i < hanjaData.length; i++) {
+        // 매 글자 시작할 때 flag 초기화
+        animationDone = false;
+        showStage1(hanjaData[i]);
+
+        // 애니메이션 완료 대기
+        while (!animationDone) {
+          await delay(300);
+        }
+
+        // 완료 후 2초 대기 → 화살표 클릭
+        await delay(2000);
+        await hoverAndClickNextArrow();
+      }
+
+      // 모든 글자 끝나면 홈으로 이동
+      await delay(2000);
+      hoverAndClickHome();
+      break;
+
+    case 2:
+      await focusAndClickButton("2단계");
+
+      for (let i = 0; i < hanjaData.length; i++) {
+        // 정답 텍스트
+        const correctText = hanjaData[i].readings.join(", ");
+
+        // 3초 대기 후 정답 버튼 클릭
+        await delay(3000);
+
+        const stageContent = document.getElementById("stage-content");
+        const correctBtn = Array.from(stageContent.querySelectorAll(".stage2-option"))
+          .find(btn => btn.textContent === correctText);
+
+        if (correctBtn) {
+          correctBtn.click();
+          await delay(2000); // 정답 처리 애니메이션 대기
+        }
+      }
+
+      // 모든 글자 끝나면 홈으로 이동
+      await delay(2000);
+      hoverAndClickHome();
+      break;
+
+    case 3:
+      await focusAndClickButton("3단계");
+
+      for (let i = 0; i < hanjaData.length; i++) {
+        // 정답 한자
+        const correctChar = hanjaData[i].char;
+
+        // 3초 대기 후 정답 버튼 클릭
+        await delay(3000);
+
+        const stageContent = document.getElementById("stage-content");
+        const correctBtn = Array.from(stageContent.querySelectorAll(".stage3-option"))
+          .find(btn => btn.textContent === correctChar);
+
+        if (correctBtn) {
+          correctBtn.click();
+          await delay(2000); // 정답 처리 애니메이션 대기
+        }
+      }
+
+      // 모든 글자 끝나면 홈으로 이동
+      await delay(2000);
+      hoverAndClickHome();
+      break;
+
+    case 4:
+      await focusAndClickButton("4단계");
+
+      // 2사이클 반복
+      for (let cycle = 0; cycle < 2; cycle++) {
+        for (let i = 0; i < hanjaData.length; i++) {
+          // 현재 카드 목록 가져오기
+          const stageContent = document.getElementById("stage-content");
+          const cards = stageContent.querySelectorAll(".stage4-card");
+
+          if (cards[i]) {
+            await delay(3000); // 3초 대기
+            cards[i].click();  // 카드 클릭 (한자 ↔ 음훈 토글)
+          }
+        }
+      }
+
+      // 모든 카드 끝나면 홈으로 이동
+      await delay(2000);
+      hoverAndClickHome();
+      break;
+  }
+}
+
+function delay(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
