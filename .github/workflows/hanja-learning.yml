@@ -1,0 +1,28 @@
+name: Hanja Learning Scheduler
+
+on:
+  schedule:
+    # UTC 기준 → KST 오전 9시/오후 3시/오후 6시
+    - cron: '0 0 * * *'   # 오전 9시
+    - cron: '0 6 * * *'   # 오후 3시
+    - cron: '0 9 * * *'   # 오후 6시
+
+jobs:
+  send:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
+      - name: Install dependencies
+        run: pip install requests
+
+      - name: Send Telegram Message
+        run: python script/telegram_send.py
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
