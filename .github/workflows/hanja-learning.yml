@@ -21,8 +21,19 @@ jobs:
       - name: Install dependencies
         run: pip install requests
 
+      - name: Determine slot from trigger time
+        id: slot
+        run: |
+          case "${{ github.event.schedule }}" in
+            '0 0 * * *') echo "slot=review_hanja" >> "$GITHUB_OUTPUT" ;;
+            '0 6 * * *') echo "slot=review_eumhun" >> "$GITHUB_OUTPUT" ;;
+            '0 9 * * *') echo "slot=new_hanja" >> "$GITHUB_OUTPUT" ;;
+            *) echo "slot=all" >> "$GITHUB_OUTPUT" ;;
+          esac
+
       - name: Send Telegram Message
         run: python script/telegram_send.py
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          SLOT: ${{ steps.slot.outputs.slot }}
