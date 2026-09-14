@@ -21,7 +21,9 @@ def send_photo(photo_path, caption):
     print(response.json())
 
 def main():
-    today = datetime.date.today().isoformat()
+    # 한국 표준시(KST, UTC+9) 기준 당일 날짜 구하기
+    kst = datetime.timezone(datetime.timedelta(hours=9))
+    today = datetime.datetime.now(kst).date().isoformat()
     # 09시=review_hanja, 15시=review_eumhun, 18시=new_hanja (GitHub Actions 트리거 시각 기준)
     slot = os.getenv("SLOT", "all")
 
